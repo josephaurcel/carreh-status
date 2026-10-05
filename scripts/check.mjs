@@ -79,7 +79,9 @@ async function email(subject, text) {
     method: 'POST',
     headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
     body: JSON.stringify({ from: 'Carreh Status <status@carreh.com>', to, subject, text }),
-  }).catch(() => null);
+  }).catch((e) => { console.log('Resend unreachable:', String(e && e.message || e)); return null; });
+  // The reason Resend gives (never the key), so a refused alert is visible in the run log.
+  if (r && !r.ok) console.log('Resend refused the alert:', r.status, (await r.text().catch(() => '')).slice(0, 300));
   return !!(r && r.ok);
 }
 
@@ -118,6 +120,15 @@ if (changes.length) {
     + '\n\nChecked from GitHub at ' + now.toISOString() + '. Live page: https://status.carreh.com';
   alerted = await email(subject, text);
   console.log(subject, '| emailed:', alerted);
+}
+// A manual run can send one test alert, to prove the emails arrive (workflow input test_alert).
+if (process.env.TEST_ALERT === 'true') {
+  const ok = await email('Carreh status: test alert, no action needed',
+    'This is a test of the Carreh status alerts. When a Carreh service goes down or recovers, an email like this one arrives here.\n\n'
+    + 'Right now: ' + SERVICES.map((id) => NAMES[id] + ' ' + (states[id] === 'operational' ? 'on time' : states[id])).join(', ') + '.\n\n'
+    + 'Live page: https://status.carreh.com');
+  console.log('Test alert emailed:', ok);
+  if (!ok) process.exitCode = 1;
 }
 console.log(JSON.stringify(states));
 // No email key and something just went down: fail this run so GitHub emails the owner.

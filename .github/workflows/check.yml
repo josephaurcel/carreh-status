@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
+    inputs:
+      test_alert:
+        description: 'Also send one test alert email (proves the alert emails arrive)'
+        type: boolean
+        default: false
 permissions:
   contents: write
 concurrency:
@@ -26,6 +31,7 @@ jobs:
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           ALERT_TO: josephaurcel@gmail.com,support@carreh.com
+          TEST_ALERT: ${{ inputs.test_alert }}
         run: node scripts/check.mjs data || echo "failed=1" >> "$GITHUB_OUTPUT"
       - name: Save the results (one commit, replaced every run)
         run: |
@@ -36,6 +42,6 @@ jobs:
           git add status.json history.json
           git commit -q -m "Checked $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -q -f origin next:status-data
-      - name: Fail when a service just went down and no alert email could be sent
+      - name: Fail when an alert email could not be sent
         if: steps.check.outputs.failed == '1'
         run: exit 1
