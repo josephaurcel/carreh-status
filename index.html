@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carreh Status</title>
+<meta name="description" content="Live status of Carreh, Flight Board and carreh.com: the apps, live flight tracking, notifications, Carreh Advisor, support and the eSIM store.">
+<meta name="theme-color" content="#0B2318">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 100'%3E%3Cpath d='M64,26 A32,32 0 1 0 64,74' fill='none' stroke='%230E4A28' stroke-width='10' stroke-linecap='round'/%3E%3Cpath d='M46,26 A32,32 0 1 1 46,74' fill='none' stroke='%2340be78' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #0B2318;
+    --leaf: #40BE78;
+    --leaf-deep: #2E9E60;
+    --cream: #FBF8F1;
+    --paper: #F5F1E8;
+    --ink: #0B2318;
+    --ink-2: #3D4A41;
+    --ink-3: #7C857E;
+    --hair: rgba(11, 35, 24, .10);
+    --board: #0D1B13;
+    --tile: #17291E;
+    --tile-ink: #F4F2EC;
+    --ontime: #40BE78;
+    --delayed: #F5C518;
+    --disrupted: #E5484D;
+    --nodata: #E3DED2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0F1A13;
+      --cream: #13211A;
+      --ink: #F1EEE6;
+      --ink-2: #C3CBC5;
+      --ink-3: #87918A;
+      --hair: rgba(241, 238, 230, .10);
+      --nodata: #23302A;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15.5px/1.55 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+  .eyebrow { font: 600 12px/1 'Space Grotesk', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--leaf); }
+
+  .preview-note { background: var(--delayed); color: #14150F; text-align: center; font: 600 12.5px/1.3 'Space Grotesk', sans-serif; letter-spacing: .02em; padding: 8px 16px; }
+
+  /* Hero: forest green, like carreh.com */
+  .hero { position: relative; overflow: hidden; background: var(--forest); color: var(--cream); }
+  .hero::before, .hero::after { content: ''; position: absolute; border-radius: 50%; pointer-events: none; }
+  .hero::before { width: 760px; height: 760px; left: -240px; top: -280px; background: radial-gradient(closest-side, rgba(64, 190, 120, .20), transparent); }
+  .hero::after { width: 720px; height: 720px; right: -260px; bottom: -340px; background: radial-gradient(closest-side, rgba(31, 107, 61, .45), transparent); }
+  .hero .wrap { position: relative; z-index: 1; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 26px 0; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #FBF8F1; }
+  .brand svg { width: 38px; height: 35px; display: block; }
+  .brand b { font: 800 23px/1 'Plus Jakarta Sans', sans-serif; letter-spacing: -.035em; }
+  .brand i { font-style: normal; font: 600 12px/1 'Space Grotesk', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(251, 248, 241, .6); padding-left: 12px; border-left: 1px solid rgba(251, 248, 241, .22); }
+  .top nav { display: flex; gap: 10px; }
+  .top nav a { font: 600 13.5px/1 'Space Grotesk', sans-serif; color: #FBF8F1; text-decoration: none; padding: 11px 16px; border: 1px solid rgba(251, 248, 241, .25); border-radius: 999px; }
+  .top nav a:hover { background: rgba(251, 248, 241, .08); }
+
+  .headline { padding: 34px 0 30px; }
+  .headline .eyebrow { display: inline-flex; align-items: center; gap: 10px; }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--state, var(--ontime)); animation: pulse 2.2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(64, 190, 120, .55); } 70% { box-shadow: 0 0 0 10px rgba(64, 190, 120, 0); } 100% { box-shadow: 0 0 0 0 rgba(64, 190, 120, 0); } }
+  h1 { margin: 18px 0 0; font: 800 clamp(40px, 7.4vw, 76px)/1.02 'Plus Jakarta Sans', sans-serif; letter-spacing: -.045em; color: #FBF8F1; max-width: 15ch; }
+  h1 em { font-style: italic; color: var(--state, var(--leaf)); letter-spacing: -.04em; }
+  .lead { margin: 18px 0 0; max-width: 56ch; color: rgba(251, 248, 241, .72); font-size: 17px; }
+
+  /* The board */
+  .board { container-type: inline-size; margin: 4px 0 64px; background: var(--board); border-radius: 22px; padding: 22px 26px 12px; box-shadow: 0 30px 80px rgba(0, 0, 0, .35), inset 0 0 0 1px rgba(255, 255, 255, .05); }
+  .board-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, .07); }
+  .board-title { font: 700 13px/1 'Space Grotesk', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #FBF8F1; }
+  .board-title span { color: rgba(251, 248, 241, .45); }
+  .clock { display: flex; align-items: center; gap: 12px; }
+  .live { font: 700 11.5px/1 'Space Grotesk', sans-serif; letter-spacing: .16em; color: var(--leaf); display: inline-flex; align-items: center; gap: 7px; }
+  .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); }
+  .cols { display: grid; grid-template-columns: 1fr auto; padding: 14px 0 6px; font: 600 11px/1 'Space Grotesk', sans-serif; letter-spacing: .16em; color: rgba(251, 248, 241, .38); text-transform: uppercase; }
+  .brow { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 11px 0; border-top: 1px solid rgba(255, 255, 255, .05); }
+  .brow:first-child { border-top: 0; }
+  /* Row tiles size themselves to the board: the longest name (13 tiles) plus the
+     widest tag ("DISRUPTED") always fit side by side, from a 320px phone up. */
+  .brow { --tw: clamp(10px, calc((100cqw - 134px) / 14.6), 23px); }
+  @media (max-width: 720px) { .brow { --tw: clamp(10px, calc((100cqw - 104px) / 14.6), 23px); } }
+  .tiles { display: flex; flex-wrap: nowrap; gap: calc(var(--tw, 23px) * .13); min-width: 0; }
+  .t { flex: none; width: var(--tw, 23px); aspect-ratio: 23 / 32; display: grid; place-items: center; border-radius: calc(var(--tw, 23px) * .17); background: var(--tile); color: var(--tile-ink);
+       font: 600 calc(var(--tw, 23px) * .74)/1 'Space Grotesk', sans-serif; text-transform: uppercase; position: relative; box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .35); }
+  .t::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, .45); }
+  .t.sp { background: transparent; box-shadow: none; }
+  .t.sp::after { display: none; }
+  .clock .tiles { gap: 3px; }
+  .clock .t { width: 21px; aspect-ratio: auto; height: 28px; font-size: 15px; border-radius: 4px; }
+  .clock .t.colon { width: 8px; background: transparent; box-shadow: none; color: rgba(251, 248, 241, .55); }
+  .clock .t.colon::after { display: none; }
+  .tag { font: 700 12px/1 'Space Grotesk', sans-serif; letter-spacing: .1em; text-transform: uppercase; padding: 9px 12px; border-radius: 5px; white-space: nowrap; }
+  .tag[data-s="operational"] { background: var(--ontime); color: #0B2318; }
+  .tag[data-s="degraded"] { background: var(--delayed); color: #14150F; }
+  .tag[data-s="outage"] { background: var(--disrupted); color: #fff; }
+  .tag[data-s="none"] { background: rgba(251, 248, 241, .12); color: rgba(251, 248, 241, .7); }
+  .board-foot { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0 8px; border-top: 1px solid rgba(255, 255, 255, .07); margin-top: 6px; font: 500 12.5px/1.4 'Space Grotesk', sans-serif; color: rgba(251, 248, 241, .5); }
+
+  /* Paper sections */
+  section.paper { padding: 72px 0 24px; }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+  .sec-head .eyebrow { color: var(--leaf-deep); }
+  h2 { margin: 12px 0 0; font: 800 clamp(30px, 4.4vw, 44px)/1.05 'Plus Jakarta Sans', sans-serif; letter-spacing: -.04em; color: var(--ink); }
+  h2 em { font-style: italic; color: var(--leaf-deep); }
+  @media (prefers-color-scheme: dark) { .sec-head .eyebrow, h2 em { color: var(--leaf); } }
+  .key { display: flex; flex-wrap: wrap; gap: 16px; font: 600 12px/1 'Space Grotesk', sans-serif; letter-spacing: .06em; color: var(--ink-3); text-transform: uppercase; }
+  .key span { display: inline-flex; align-items: center; gap: 7px; }
+  .key i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  .group { font: 700 11.5px/1 'Space Grotesk', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); padding: 26px 0 4px; }
+  .svc { padding: 18px 0 20px; border-top: 1px solid var(--hair); }
+  .svc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+  .svc-name { font: 800 19px/1.25 'Plus Jakarta Sans', sans-serif; letter-spacing: -.02em; }
+  .svc-desc { color: var(--ink-2); font-size: 14px; margin-top: 2px; }
+  .svc-pct { font: 600 14px/1 'Space Grotesk', sans-serif; color: var(--ink); white-space: nowrap; text-align: right; }
+  .svc-pct small { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-top: 5px; }
+  .strip { display: flex; gap: 3px; height: 34px; margin-top: 14px; }
+  .strip i { flex: 1 1 0; min-width: 2px; border-radius: 3px; background: var(--ontime); transition: transform .12s ease, opacity .12s; }
+  .strip i[data-s="degraded"] { background: var(--delayed); }
+  .strip i[data-s="outage"] { background: var(--disrupted); }
+  .strip i[data-s="none"] { background: var(--nodata); }
+  .strip:hover i { opacity: .5; }
+  .strip i:hover, .strip i:focus-visible { opacity: 1; transform: scaleY(1.15); outline: none; }
+  .axis { display: flex; justify-content: space-between; margin-top: 8px; font: 500 11.5px/1 'Space Grotesk', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+
+  .log { list-style: none; margin: 0; padding: 0; }
+  .log li { display: grid; grid-template-columns: 132px 1fr; gap: 26px; padding: 20px 0; border-top: 1px solid var(--hair); }
+  .when { font: 600 12.5px/1.35 'Space Grotesk', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+  .what-title { font: 800 18px/1.3 'Plus Jakarta Sans', sans-serif; letter-spacing: -.02em; }
+  .what-meta { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font: 600 12.5px/1 'Space Grotesk', sans-serif; letter-spacing: .04em; color: var(--ink-3); }
+  .what-meta .tag { padding: 6px 9px; font-size: 10.5px; }
+  .what-body { color: var(--ink-2); font-size: 14.5px; margin-top: 8px; max-width: 64ch; }
+  .quiet .what-title { font: 500 15px/1.4 'Plus Jakarta Sans', sans-serif; letter-spacing: 0; color: var(--ink-3); }
+
+  .tip { position: fixed; z-index: 20; pointer-events: none; background: var(--forest); color: #FBF8F1; border-radius: 10px; padding: 10px 13px; max-width: 250px;
+         font: 500 12.5px/1.45 'Plus Jakarta Sans', sans-serif; box-shadow: 0 12px 30px rgba(0, 0, 0, .25); opacity: 0; transition: opacity .1s; }
+  .tip.on { opacity: 1; }
+  .tip b { display: block; font: 700 11.5px/1.3 'Space Grotesk', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--leaf); margin-bottom: 2px; }
+
+  footer { background: var(--forest); color: rgba(251, 248, 241, .65); margin-top: 72px; }
+  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-top: 34px; padding-bottom: 38px; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 20px; font: 600 13.5px/1 'Space Grotesk', sans-serif; }
+  footer nav a { color: #FBF8F1; text-decoration: none; }
+  footer nav a:hover { color: var(--leaf); }
+  footer p { margin: 10px 0 0; font-size: 13px; }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 0 18px; }
+    .top { padding: 18px 0; }
+    .top nav { display: none; }
+    .brand b { font-size: 21px; }
+    .headline { padding: 22px 0 24px; }
+    .lead { font-size: 15.5px; }
+    .board { padding: 16px 14px 8px; border-radius: 18px; margin-bottom: 44px; }
+    .board-title span { display: none; }
+    .clock .t { width: 15px; height: 22px; font-size: 12px; }
+    .clock .tiles { gap: 2px; }
+    .clock .t.colon { width: 6px; }
+    .tag { font-size: 10.5px; padding: 7px 8px; letter-spacing: .06em; }
+    .cols { display: none; }
+    .board-foot { flex-direction: column; gap: 4px; }
+    section.paper { padding-top: 48px; }
+    .sec-head { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .strip { height: 28px; gap: 2px; }
+    .strip i.old { display: none; }
+    .from-90 { display: none; }
+    .log li { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (min-width: 721px) { .from-30 { display: none; } }
+</style>
+</head>
+<body>
+<div class="preview-note" id="previewNote" hidden>Design preview with sample data. Nothing on this page is live yet.</div>
+
+<header class="hero" id="hero">
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="https://carreh.com/" aria-label="Carreh">
+        <svg viewBox="0 0 110 100" aria-hidden="true"><path d="M64,26 A32,32 0 1 0 64,74" fill="none" stroke="#FBF8F1" stroke-width="10" stroke-linecap="round"/><path d="M46,26 A32,32 0 1 1 46,74" fill="none" stroke="#40be78" stroke-width="10" stroke-linecap="round"/></svg>
+        <b>Carreh</b><i>Status</i>
+      </a>
+      <nav aria-label="Carreh">
+        <a href="https://carreh.com/">carreh.com</a>
+        <a href="https://flightboard.carreh.com/">Flight Board</a>
+      </nav>
+    </div>
+
+    <div class="headline">
+      <div class="eyebrow"><span class="pulse"></span><span>Live · checked every 5 minutes</span></div>
+      <h1 id="headline">Checking <em>Carreh.</em></h1>
+      <p class="lead" id="lead">Carreh, Flight Board and carreh.com, checked from outside our own servers.</p>
+    </div>
+
+    <div class="board" role="table" aria-label="Carreh services">
+      <div class="board-head">
+        <div class="board-title">Services <span>· all of Carreh</span></div>
+        <div class="clock"><div class="tiles" id="clock" aria-label="Local time"></div><span class="live">Live</span></div>
+      </div>
+      <div class="cols" aria-hidden="true"><span>Service</span><span>Status</span></div>
+      <div id="boardRows"></div>
+      <div class="board-foot"><span id="checked">Last check: just now</span><span>Times in your time zone</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="paper">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">The last 90 days</div><h2>Uptime, <em>day by day.</em></h2></div>
+        <div class="key" aria-hidden="true">
+          <span><i style="background:var(--ontime)"></i>On time</span>
+          <span><i style="background:var(--delayed)"></i>Delayed</span>
+          <span><i style="background:var(--disrupted)"></i>Disrupted</span>
+          <span><i style="background:var(--nodata)"></i>No data</span>
+        </div>
+      </div>
+      <div id="history"></div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">Disruption log</div><h2>What went wrong, <em>and when.</em></h2></div>
+        <div class="key"><span>The last 14 days</span></div>
+      </div>
+      <ul class="log" id="log"></ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="https://carreh.com/" aria-label="Carreh">
+        <svg viewBox="0 0 110 100" aria-hidden="true"><path d="M64,26 A32,32 0 1 0 64,74" fill="none" stroke="#FBF8F1" stroke-width="10" stroke-linecap="round"/><path d="M46,26 A32,32 0 1 1 46,74" fill="none" stroke="#40be78" stroke-width="10" stroke-linecap="round"/></svg>
+        <b>Carreh</b>
+      </a>
+      <p>Something not working for you? Write to support@carreh.com.</p>
+    </div>
+    <nav aria-label="More">
+      <a href="https://carreh.com/">carreh.com</a>
+      <a href="https://flightboard.carreh.com/">Flight Board</a>
+      <a href="https://carreh.com/privacy-policy">Privacy</a>
+      <a href="mailto:support@carreh.com">Contact support</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+const SERVICES = [
+  { group: 'Apps', items: [
+    { id: 'carreh_app', board: 'Carreh', name: 'Carreh', desc: 'The Carreh app on iPhone and Android' },
+    { id: 'flight_board', board: 'Flight Board', name: 'Flight Board', desc: 'The Flight Board app and flightboard.carreh.com' },
+  ] },
+  { group: 'Web', items: [
+    { id: 'website', board: 'carreh.com', name: 'carreh.com', desc: 'The Carreh website and your account on the web' },
+  ] },
+  { group: 'Services', items: [
+    { id: 'flight_tracking', board: 'Live flights', name: 'Live flight tracking', desc: 'Gates, delays, boarding and landings for the flights you follow' },
+    { id: 'notifications', board: 'Notifications', name: 'Notifications', desc: 'Trip and flight alerts on your phone' },
+    { id: 'advisor', board: 'Advisor', name: 'Carreh Advisor', desc: 'Answers from Carreh’s travel assistant' },
+    { id: 'support', board: 'Support', name: 'Support', desc: 'Messages to Carreh Client Services' },
+    { id: 'esim_store', board: 'eSIM store', name: 'eSIM store', desc: 'Browsing, buying and activating travel eSIMs' },
+  ] },
+];
+const ALL = SERVICES.flatMap((g) => g.items);
+const TAG = { operational: 'On time', degraded: 'Delayed', outage: 'Disrupted', none: 'No data' };
+const COLOR = { operational: 'var(--ontime)', degraded: 'var(--delayed)', outage: 'var(--disrupted)', none: 'var(--ink-3)' };
+
+function sampleData() {
+  const now = new Date();
+  const day = (n) => { const d = new Date(now); d.setUTCDate(d.getUTCDate() - n); return d.toISOString().slice(0, 10); };
+  const at = (n, h, m) => { const d = new Date(now); d.setUTCDate(d.getUTCDate() - n); d.setUTCHours(h, m, 0, 0); return d.toISOString(); };
+  const days = {};
+  ALL.forEach((s) => { days[s.id] = {}; for (let n = 0; n < 90; n++) days[s.id][day(n)] = { ok: 288, degraded: 0, outage: 0 }; });
+  for (let n = 64; n < 90; n++) delete days.advisor[day(n)];
+  days.flight_tracking[day(3)] = { ok: 281, degraded: 7, outage: 0 };
+  days.notifications[day(9)] = { ok: 284, degraded: 0, outage: 4 };
+  days.esim_store[day(21)] = { ok: 270, degraded: 18, outage: 0 };
+  ['website', 'carreh_app', 'flight_board'].forEach((id) => { days[id][day(41)] = { ok: 285, degraded: 0, outage: 3 }; });
+  return {
+    status: { checked_at: new Date(now.getTime() - 2 * 60000).toISOString(), services: Object.fromEntries(ALL.map((s) => [s.id, { state: 'operational' }])) },
+    history: { days, incidents: [
+      { services: ['flight_tracking'], state: 'degraded', title: 'Flight updates arriving late',
+        body: 'Updates from our flight data provider reached the apps up to 30 minutes late. Gates, delays and landings caught up once the provider recovered.',
+        started_at: at(3, 13, 5), resolved_at: at(3, 13, 40) },
+      { services: ['notifications'], state: 'outage', title: 'Notifications not sent',
+        body: 'Trip and flight alerts were not sent for 20 minutes. Alerts due in that window went out once the service was back.',
+        started_at: at(9, 6, 10), resolved_at: at(9, 6, 30) },
+    ] },
+  };
+}
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const tiles = (text, max) => String(text).toUpperCase().slice(0, max).split('').map((ch) => ch === ' ' ? '<span class="t sp"></span>' : `<span class="t">${esc(ch)}</span>`).join('');
+const fmtDay = (k) => new Date(k + 'T12:00:00Z').toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+const fmtTime = (iso) => new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+const zone = () => { try { return new Intl.DateTimeFormat(undefined, { timeZoneName: 'short' }).formatToParts(new Date()).find((p) => p.type === 'timeZoneName').value; } catch (_) { return ''; } };
+const dayState = (c) => !c ? 'none' : c.outage > 0 ? 'outage' : c.degraded > 0 ? 'degraded' : 'operational';
+
+function tick() {
+  const d = new Date();
+  $('clock').innerHTML = tiles(String(d.getHours()).padStart(2, '0'), 2) + '<span class="t colon">:</span>' + tiles(String(d.getMinutes()).padStart(2, '0'), 2);
+}
+
+function render({ status, history }) {
+  const today = new Date();
+  const keys = Array.from({ length: 90 }, (_, i) => { const d = new Date(today); d.setUTCDate(d.getUTCDate() - (89 - i)); return d.toISOString().slice(0, 10); });
+  const stateOf = (id) => (status.services[id] || {}).state || 'none';
+  const states = ALL.map((s) => stateOf(s.id));
+  const worst = states.includes('outage') ? 'outage' : states.includes('degraded') ? 'degraded' : 'operational';
+  const hit = ALL.filter((s) => ['degraded', 'outage'].includes(stateOf(s.id))).map((s) => s.name);
+
+  document.documentElement.style.setProperty('--state', COLOR[worst]);
+  $('headline').innerHTML = worst === 'operational' ? 'Everything is <em>on time.</em>'
+    : worst === 'degraded' ? 'Some of Carreh is <em>delayed.</em>' : 'Some of Carreh is <em>disrupted.</em>';
+  $('lead').textContent = worst === 'operational'
+    ? 'Carreh, Flight Board and carreh.com are all working normally. We check them every 5 minutes from outside our own servers.'
+    : 'Affected right now: ' + hit.join(', ') + '. Everything else is working normally. We are on it, and this page updates every 5 minutes.';
+  const mins = Math.max(0, Math.round((Date.now() - Date.parse(status.checked_at)) / 60000));
+  $('checked').textContent = 'Last check: ' + (mins < 1 ? 'just now' : mins === 1 ? '1 minute ago' : mins + ' minutes ago');
+
+  const narrow = window.matchMedia('(max-width: 720px)').matches;
+  $('boardRows').innerHTML = ALL.map((s) => `
+    <div class="brow" role="row"><div class="tiles" role="cell" aria-label="${esc(s.name)}">${tiles(s.board, narrow ? 15 : 16)}</div>
+    <span class="tag" role="cell" data-s="${stateOf(s.id)}">${TAG[stateOf(s.id)]}</span></div>`).join('');
+
+  $('history').innerHTML = SERVICES.map((g) => `<div class="group">${esc(g.group)}</div>` + g.items.map((s) => {
+    const days = (history.days || {})[s.id] || {};
+    const up = (ks) => { let ok = 0, all = 0; ks.forEach((k) => { const c = days[k]; if (c) { ok += c.ok; all += c.ok + c.degraded + c.outage; } }); return all ? (Math.floor(ok / all * 10000) / 100).toFixed(2) + '%' : 'No data'; };
+    return `<div class="svc">
+      <div class="svc-head"><div><div class="svc-name">${esc(s.name)}</div><div class="svc-desc">${esc(s.desc)}</div></div>
+      <div class="svc-pct"><span class="from-90">${up(keys)}</span><span class="from-30">${up(keys.slice(60))}</span><small>uptime</small></div></div>
+      <div class="strip">${keys.map((k, i) => { const ds = dayState(days[k]); return `<i class="${i < 60 ? 'old' : ''}" data-s="${ds}" data-svc="${s.id}" data-day="${k}" tabindex="0" aria-label="${esc(fmtDay(k))}: ${TAG[ds]}"></i>`; }).join('')}</div>
+      <div class="axis"><span class="from-90">90 days ago</span><span class="from-30">30 days ago</span><span>Today</span></div>
+    </div>`;
+  }).join('')).join('');
+
+  const names = Object.fromEntries(ALL.map((s) => [s.id, s.name]));
+  const byDay = {};
+  (history.incidents || []).forEach((x) => { const k = x.started_at.slice(0, 10); (byDay[k] = byDay[k] || []).push(x); });
+  const last14 = Array.from({ length: 14 }, (_, i) => { const d = new Date(today); d.setUTCDate(d.getUTCDate() - i); return d.toISOString().slice(0, 10); });
+  const out = []; let quiet = [];
+  const flush = () => {
+    if (!quiet.length) return;
+    const a = quiet[quiet.length - 1], b = quiet[0];
+    out.push(`<li class="quiet"><div class="when">${quiet.length === 1 ? esc(fmtDay(b)) : esc(fmtDay(a)) + '<br>to ' + esc(fmtDay(b))}</div><div><div class="what-title">No disruptions. Everything ran on time.</div></div></li>`);
+    quiet = [];
+  };
+  last14.forEach((k) => {
+    const list = byDay[k] || [];
+    if (!list.length) { quiet.push(k); return; }
+    flush();
+    list.forEach((x) => out.push(`<li><div class="when">${esc(fmtDay(k))}<br>${esc(fmtTime(x.started_at))} to ${x.resolved_at ? esc(fmtTime(x.resolved_at)) : 'now'}</div><div>
+      <div class="what-title">${esc(x.title)}</div>
+      <div class="what-meta"><span class="tag" data-s="${x.state}">${TAG[x.state] || 'Delayed'}</span><span>${esc(x.services.map((s) => names[s] || s).join(', '))}</span><span>${x.resolved_at ? 'Resolved' : 'Ongoing'} · ${esc(zone())}</span></div>
+      ${x.body ? `<div class="what-body">${esc(x.body)}</div>` : ''}</div></li>`));
+  });
+  flush();
+  $('log').innerHTML = out.join('');
+
+  const tip = $('tip');
+  const show = (el) => {
+    const c = ((history.days || {})[el.dataset.svc] || {})[el.dataset.day];
+    const ds = dayState(c), total = c ? c.ok + c.degraded + c.outage : 0;
+    const inc = (history.incidents || []).filter((x) => x.started_at.slice(0, 10) === el.dataset.day && x.services.includes(el.dataset.svc));
+    tip.innerHTML = `<b>${esc(fmtDay(el.dataset.day))} · ${TAG[ds]}</b>${total ? (Math.floor(c.ok / total * 10000) / 100).toFixed(2) + '% of checks passed' : 'Not checked yet'}${inc.map((x) => '<br>' + esc(x.title)).join('')}`;
+    const r = el.getBoundingClientRect();
+    tip.style.left = Math.min(window.innerWidth - 258, Math.max(8, r.left + r.width / 2 - 125)) + 'px';
+    tip.style.top = Math.max(8, r.top - 64) + 'px';
+    tip.classList.add('on');
+  };
+  document.querySelectorAll('.strip i').forEach((el) => {
+    el.addEventListener('mouseenter', () => show(el)); el.addEventListener('focus', () => show(el));
+    el.addEventListener('mouseleave', () => tip.classList.remove('on')); el.addEventListener('blur', () => tip.classList.remove('on'));
+  });
+  window.addEventListener('scroll', () => tip.classList.remove('on'), { passive: true });
+}
+
+tick(); setInterval(tick, 15000);
+// The checker (GitHub Actions, every 5 minutes) writes these two files to the status-data branch.
+const DATA = 'https://raw.githubusercontent.com/josephaurcel/carreh-status/status-data/';
+(async () => {
+  const preview = new URLSearchParams(location.search).has('preview') || location.protocol === 'file:';
+  if (preview) { $('previewNote').hidden = false; render(sampleData()); return; }
+  try {
+    const key = Math.floor(Date.now() / 60000);
+    const [s, h] = await Promise.all(['status.json', 'history.json'].map((f) => fetch(DATA + f + '?m=' + key, { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); })));
+    render({ status: s, history: h });
+  } catch (_) {
+    // Never show made-up data: say plainly that the status could not be read.
+    render({ status: { checked_at: new Date().toISOString(), services: {} }, history: { days: {}, incidents: [] } });
+    $('headline').innerHTML = 'Status is <em>unavailable.</em>';
+    $('lead').textContent = 'We could not read the latest checks just now. Please try again in a few minutes, or write to support@carreh.com.';
+    $('checked').textContent = 'Last check: unknown';
+  }
+  setInterval(() => location.reload(), 5 * 60000);
+})();
+</script>
+</body>
+</html>

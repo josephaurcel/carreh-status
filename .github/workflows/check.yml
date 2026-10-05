@@ -1,0 +1,41 @@
+name: Check Carreh
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: status-check
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: status-data
+          path: data
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check every Carreh service
+        id: check
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_TO: josephaurcel@gmail.com,support@carreh.com
+        run: node scripts/check.mjs data || echo "failed=1" >> "$GITHUB_OUTPUT"
+      - name: Save the results (one commit, replaced every run)
+        run: |
+          cd data
+          git config user.name "Carreh Status"
+          git config user.email "status@carreh.com"
+          git checkout -q --orphan next
+          git add status.json history.json
+          git commit -q -m "Checked $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q -f origin next:status-data
+      - name: Fail when a service just went down and no alert email could be sent
+        if: steps.check.outputs.failed == '1'
+        run: exit 1
