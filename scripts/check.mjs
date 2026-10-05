@@ -4,8 +4,8 @@
 //   node scripts/check.mjs <data-dir>
 //
 // Reads and writes <data-dir>/status.json and <data-dir>/history.json (the status-data branch),
-// then emails the founder and support when a service changes state (RESEND_API_KEY, optional).
-// Without that key, a new outage fails the run so GitHub emails the repository owner instead.
+// When a service gets worse, the run fails so GitHub emails the repository owner (the founder's
+// choice, 6 Oct 2026). A Resend email also goes out only if RESEND_API_KEY is ever added.
 // It only ever READS Carreh: two public pages, the health probe, and one public summary.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -109,8 +109,7 @@ writeJson('status.json', {
 });
 writeJson('history.json', history);
 
-// Tell people only about real changes.
-let alerted = true;
+// Tell people only about real changes. Resend email is optional (only if RESEND_API_KEY is ever added).
 if (changes.length) {
   const down = changes.filter((c) => c.to !== 'operational');
   const subject = down.length
@@ -118,18 +117,20 @@ if (changes.length) {
     : 'Carreh status: ' + changes.map((c) => NAMES[c.id]).join(', ') + ' working normally again';
   const text = changes.map((c) => `${NAMES[c.id]}: ${c.from} -> ${c.to}. ${c.title}.`).join('\n')
     + '\n\nChecked from GitHub at ' + now.toISOString() + '. Live page: https://status.carreh.com';
-  alerted = await email(subject, text);
-  console.log(subject, '| emailed:', alerted);
+  const emailed = await email(subject, text);
+  console.log(subject, '| emailed:', emailed);
 }
-// A manual run can send one test alert, to prove the emails arrive (workflow input test_alert).
-if (process.env.TEST_ALERT === 'true') {
-  const ok = await email('Carreh status: test alert, no action needed',
-    'This is a test of the Carreh status alerts. When a Carreh service goes down or recovers, an email like this one arrives here.\n\n'
-    + 'Right now: ' + SERVICES.map((id) => NAMES[id] + ' ' + (states[id] === 'operational' ? 'on time' : states[id])).join(', ') + '.\n\n'
-    + 'Live page: https://status.carreh.com');
-  console.log('Test alert emailed:', ok);
-  if (!ok) process.exitCode = 1;
+
+// THE ALERT (the founder, 6 Oct 2026: "Let's use GitHub email for now"). When a service gets worse
+// (down, or slow), this run fails and GitHub emails the repository owner. It is free, has no daily cap,
+// and needs nothing from Carreh's own servers, which may be the thing that is down. Recoveries do not
+// fail the run: the page shows them. Each worse service is written as an annotation on the run.
+const worse = changes.filter((c) => c.to !== 'operational');
+for (const c of worse) {
+  console.log(`::error title=${NAMES[c.id]}${c.to === 'outage' ? ' is down' : ' is slow'}::${c.title}. Live page: https://status.carreh.com`);
 }
+// A manual run can test the alert (workflow input test_alert): it fails on purpose, so GitHub sends the email.
+const testing = process.env.TEST_ALERT === 'true';
+if (testing) console.log('::error title=Test alert, no action needed::This run failed on purpose to test the Carreh status alert email. Live page: https://status.carreh.com');
 console.log(JSON.stringify(states));
-// No email key and something just went down: fail this run so GitHub emails the owner.
-if (!alerted && changes.some((c) => c.to === 'outage')) process.exitCode = 1;
+if (worse.length || testing) process.exitCode = 1;
