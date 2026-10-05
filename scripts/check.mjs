@@ -125,12 +125,14 @@ if (changes.length) {
 // (down, or slow), this run fails and GitHub emails the repository owner. It is free, has no daily cap,
 // and needs nothing from Carreh's own servers, which may be the thing that is down. Recoveries do not
 // fail the run: the page shows them. Each worse service is written as an annotation on the run.
+// GitHub's annotation syntax: a title is a property (escape % CR LF : and ,); the message escapes % CR LF.
+const prop = (v) => String(v).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A').replace(/:/g, '%3A').replace(/,/g, '%2C');
+const data = (v) => String(v).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+const annotate = (title, message) => console.log(`::error title=${prop(title)}::${data(message)}`);
 const worse = changes.filter((c) => c.to !== 'operational');
-for (const c of worse) {
-  console.log(`::error title=${NAMES[c.id]}${c.to === 'outage' ? ' is down' : ' is slow'}::${c.title}. Live page: https://status.carreh.com`);
-}
+for (const c of worse) annotate(NAMES[c.id] + (c.to === 'outage' ? ' is down' : ' is slow'), c.title + '. Live page: https://status.carreh.com');
 // A manual run can test the alert (workflow input test_alert): it fails on purpose, so GitHub sends the email.
 const testing = process.env.TEST_ALERT === 'true';
-if (testing) console.log('::error title=Test alert, no action needed::This run failed on purpose to test the Carreh status alert email. Live page: https://status.carreh.com');
+if (testing) annotate('Test alert, no action needed', 'This run failed on purpose to test the Carreh status alert email. Live page: https://status.carreh.com');
 console.log(JSON.stringify(states));
 if (worse.length || testing) process.exitCode = 1;
