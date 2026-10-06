@@ -45,7 +45,6 @@
   body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15.5px/1.55 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
   .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
-  .eyebrow { font: 600 12px/1 'Space Grotesk', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--leaf); }
 
   .preview-note { background: var(--delayed); color: #14150F; text-align: center; font: 600 12.5px/1.3 'Space Grotesk', sans-serif; letter-spacing: .02em; padding: 8px 16px; }
 
@@ -65,10 +64,7 @@
   .top nav a:hover { background: rgba(251, 248, 241, .08); }
 
   .headline { padding: 34px 0 30px; }
-  .headline .eyebrow { display: inline-flex; align-items: center; gap: 10px; }
-  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--state, var(--ontime)); animation: pulse 2.2s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(64, 190, 120, .55); } 70% { box-shadow: 0 0 0 10px rgba(64, 190, 120, 0); } 100% { box-shadow: 0 0 0 0 rgba(64, 190, 120, 0); } }
-  h1 { margin: 18px 0 0; font: 800 clamp(40px, 7.4vw, 76px)/1.02 'Plus Jakarta Sans', sans-serif; letter-spacing: -.045em; color: #FBF8F1; max-width: 15ch; }
+  h1 { margin: 0; font: 800 clamp(40px, 7.4vw, 76px)/1.02 'Plus Jakarta Sans', sans-serif; letter-spacing: -.045em; color: #FBF8F1; max-width: 15ch; }
   h1 em { font-style: italic; color: var(--state, var(--leaf)); letter-spacing: -.04em; }
   .lead { margin: 18px 0 0; max-width: 56ch; color: rgba(251, 248, 241, .72); font-size: 17px; }
 
@@ -107,10 +103,10 @@
   /* Paper sections */
   section.paper { padding: 72px 0 24px; }
   .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
-  .sec-head .eyebrow { color: var(--leaf-deep); }
-  h2 { margin: 12px 0 0; font: 800 clamp(30px, 4.4vw, 44px)/1.05 'Plus Jakarta Sans', sans-serif; letter-spacing: -.04em; color: var(--ink); }
+  h2 { margin: 0; font: 800 clamp(30px, 4.4vw, 44px)/1.05 'Plus Jakarta Sans', sans-serif; letter-spacing: -.04em; color: var(--ink); }
   h2 em { font-style: italic; color: var(--leaf-deep); }
-  @media (prefers-color-scheme: dark) { .sec-head .eyebrow, h2 em { color: var(--leaf); } }
+  .sec-line { margin: 10px 0 0; font: 500 15px/1.5 'Plus Jakarta Sans', sans-serif; color: var(--ink-3); }
+  @media (prefers-color-scheme: dark) { h2 em { color: var(--leaf); } }
   .key { display: flex; flex-wrap: wrap; gap: 16px; font: 600 12px/1 'Space Grotesk', sans-serif; letter-spacing: .06em; color: var(--ink-3); text-transform: uppercase; }
   .key span { display: inline-flex; align-items: center; gap: 7px; }
   .key i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
@@ -194,7 +190,6 @@
     </div>
 
     <div class="headline">
-      <div class="eyebrow"><span class="pulse"></span><span>Live · checked every 5 minutes</span></div>
       <h1 id="headline">Checking <em>Carreh.</em></h1>
       <p class="lead" id="lead">Carreh, Flight Board and carreh.com, checked from outside our own servers.</p>
     </div>
@@ -215,7 +210,7 @@
   <section class="paper">
     <div class="wrap">
       <div class="sec-head">
-        <div><div class="eyebrow">The last 90 days</div><h2>Uptime, <em>day by day.</em></h2></div>
+        <div><h2>Uptime, <em>day by day.</em></h2><p class="sec-line">The last 90 days, one bar per day.</p></div>
         <div class="key" aria-hidden="true">
           <span><i style="background:var(--ontime)"></i>On time</span>
           <span><i style="background:var(--delayed)"></i>Delayed</span>
@@ -230,8 +225,7 @@
   <section class="paper">
     <div class="wrap">
       <div class="sec-head">
-        <div><div class="eyebrow">Disruption log</div><h2>What went wrong, <em>and when.</em></h2></div>
-        <div class="key"><span>The last 14 days</span></div>
+        <div><h2>What went wrong, <em>and when.</em></h2><p class="sec-line">Every disruption in the last 14 days.</p></div>
       </div>
       <ul class="log" id="log"></ul>
     </div>
