@@ -393,13 +393,20 @@ function render({ status, history }) {
 
 tick(); setInterval(tick, 15000);
 // The checker (GitHub Actions, every 5 minutes) writes these two files to the status-data branch.
-const DATA = 'https://raw.githubusercontent.com/josephaurcel/carreh-status/status-data/';
+// The checks run in two places: Cloudflare (every 5 minutes, reliable) and GitHub (when GitHub's
+// timer fires). The page reads both and shows the fresher one, so either can stop without the
+// page going stale.
+const SOURCES = ['https://carreh-status.carreh.workers.dev/', 'https://raw.githubusercontent.com/josephaurcel/carreh-status/status-data/'];
 (async () => {
   const preview = new URLSearchParams(location.search).has('preview') || location.protocol === 'file:';
   if (preview) { $('previewNote').hidden = false; render(sampleData()); return; }
   try {
     const key = Math.floor(Date.now() / 60000);
-    const [s, h] = await Promise.all(['status.json', 'history.json'].map((f) => fetch(DATA + f + '?m=' + key, { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); })));
+    const load = (base) => Promise.all(['status.json', 'history.json'].map((f) => fetch(base + f + '?m=' + key, { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); })));
+    const got = (await Promise.allSettled(SOURCES.map(load))).filter((r) => r.status === 'fulfilled' && r.value[0] && r.value[0].checked_at).map((r) => r.value);
+    if (!got.length) throw new Error('no status source answered');
+    got.sort((a, b) => Date.parse(b[0].checked_at) - Date.parse(a[0].checked_at));
+    const [s, h] = got[0];
     render({ status: s, history: h });
   } catch (_) {
     // Never show made-up data: say plainly that the status could not be read.
