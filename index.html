@@ -324,14 +324,21 @@ function render({ status, history }) {
   const worst = states.includes('outage') ? 'outage' : states.includes('degraded') ? 'degraded' : 'operational';
   const hit = ALL.filter((s) => ['degraded', 'outage'].includes(stateOf(s.id))).map((s) => s.name);
 
-  document.documentElement.style.setProperty('--state', COLOR[worst]);
-  $('headline').innerHTML = worst === 'operational' ? 'Everything is <em>on time.</em>'
-    : worst === 'degraded' ? 'Some of Carreh is <em>delayed.</em>' : 'Some of Carreh is <em>disrupted.</em>';
-  $('lead').textContent = worst === 'operational'
-    ? 'Carreh, Flight Board and carreh.com are all working normally. We check them every 5 minutes from outside our own servers.'
-    : 'Affected right now: ' + hit.join(', ') + '. Everything else is working normally. We are on it, and this page updates every 5 minutes.';
   const mins = Math.max(0, Math.round((Date.now() - Date.parse(status.checked_at)) / 60000));
-  $('checked').textContent = 'Last check: ' + (mins < 1 ? 'just now' : mins === 1 ? '1 minute ago' : mins + ' minutes ago');
+  const ago = mins < 1 ? 'just now' : mins === 1 ? '1 minute ago' : mins < 90 ? mins + ' minutes ago'
+    : Math.round(mins / 60) === 1 ? '1 hour ago' : Math.round(mins / 60) + ' hours ago';
+  // A check older than 20 minutes says so. "On time" is only ever claimed from a recent check.
+  const late = mins > 20;
+  document.documentElement.style.setProperty('--state', COLOR[late && worst === 'operational' ? 'degraded' : worst]);
+  $('headline').innerHTML = late && worst === 'operational' ? 'Checks are running <em>late.</em>'
+    : worst === 'operational' ? 'Everything is <em>on time.</em>'
+    : worst === 'degraded' ? 'Some of Carreh is <em>delayed.</em>' : 'Some of Carreh is <em>disrupted.</em>';
+  $('lead').textContent = late && worst === 'operational'
+    ? 'Our last check was ' + ago + ', and everything was working normally then. Checks usually run every 5 minutes; this page updates as soon as the next one is in.'
+    : worst === 'operational'
+    ? 'Carreh, Flight Board and carreh.com are all working normally. We check them every 5 minutes from outside our own servers.'
+    : 'Affected ' + (late ? 'at our last check, ' + ago : 'right now') + ': ' + hit.join(', ') + '. Everything else is working normally. We are on it, and this page updates every 5 minutes.';
+  $('checked').textContent = 'Last check: ' + ago;
 
   const narrow = window.matchMedia('(max-width: 720px)').matches;
   $('boardRows').innerHTML = ALL.map((s) => `
