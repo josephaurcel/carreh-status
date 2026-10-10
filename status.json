@@ -1,0 +1,39 @@
+{
+ "checked_at": "2026-10-10T14:44:49.446Z",
+ "services": {
+  "carreh_app": {
+   "state": "operational"
+  },
+  "flight_board": {
+   "state": "operational"
+  },
+  "website": {
+   "state": "operational"
+  },
+  "flight_tracking": {
+   "state": "operational"
+  },
+  "notifications": {
+   "state": "operational"
+  },
+  "advisor": {
+   "state": "operational"
+  },
+  "support": {
+   "state": "operational"
+  },
+  "esim_store": {
+   "state": "operational"
+  }
+ },
+ "streak": {
+  "website": 0,
+  "carreh_app": 0,
+  "flight_board": 0,
+  "flight_tracking": 0,
+  "notifications": 0,
+  "advisor": 0,
+  "support": 0,
+  "esim_store": 0
+ }
+}

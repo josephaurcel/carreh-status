@@ -1,0 +1,261 @@
+{
+ "days": {
+  "carreh_app": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "flight_board": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "website": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "flight_tracking": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "notifications": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "advisor": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "support": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "esim_store": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 3,
+    "degraded": 0,
+    "outage": 0
+   }
+  }
+ },
+ "incidents": []
+}
