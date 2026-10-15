@@ -15,10 +15,11 @@ const DATA = process.argv[2] || 'data';
 const SUPABASE = 'https://kujufeuceyrhgfwyonsl.supabase.co';
 // The public (anon) key: it ships in every Carreh app and web page, and can only call public functions.
 const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1anVmZXVjZXlyaGdmd3lvbnNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MzMxOTIsImV4cCI6MjA4ODQwOTE5Mn0.ipkHVasACY2rErJxSaXFxdEdkdTMhqzdT2bK3bhlsl4';
-const SERVICES = ['carreh_app', 'flight_board', 'website', 'flight_tracking', 'notifications', 'advisor', 'support', 'esim_store'];
+const SERVICES = ['carreh_app', 'flight_board', 'business', 'website', 'business_site', 'flight_tracking', 'notifications', 'advisor', 'support', 'esim_store'];
 const NAMES = {
   carreh_app: 'The Carreh app', flight_board: 'Flight Board', website: 'carreh.com', flight_tracking: 'Live flight tracking',
   notifications: 'Notifications', advisor: 'Carreh Advisor', support: 'Support', esim_store: 'The eSIM store',
+  business: 'Carreh Business', business_site: 'business.carreh.com',
 };
 
 const worst = (...s) => s.filter(Boolean).reduce((a, b) => (RANK[b] > RANK[a] ? b : a), 'operational');
@@ -48,12 +49,15 @@ async function get(url, { expect, json = false, method = 'GET', headers = {}, bo
 }
 
 async function check(previous) {
-  const [site, fbSite, health, summary] = await Promise.all([
+  const [site, fbSite, health, summary, bizSite, bizApi] = await Promise.all([
     get('https://carreh.com/', { expect: 'Carreh' }),
     get('https://flightboard.carreh.com/', { expect: 'Flight Board' }),
     get('https://carreh.com/.netlify/functions/health', { json: true }),
     get(`${SUPABASE}/rest/v1/rpc/carreh_public_status`, { json: true, method: 'POST', body: '{}',
       headers: { apikey: ANON, Authorization: 'Bearer ' + ANON, 'Content-Type': 'application/json' } }),
+    // ★ 16 OCT 2026 (founder) — Carreh Business is its own system (Cloudflare), checked on its own.
+    get('https://business.carreh.com/', { expect: 'Carreh' }),
+    get('https://business.carreh.com/api/v1/status', { json: true }),
   ]);
   const serverUp = health.ok && health.json && health.json.ok === true && health.json.database === 'up';
   const s = {};
@@ -66,6 +70,11 @@ async function check(previous) {
     else if (!serverUp) s[id] = 'outage';
     else s[id] = (previous.services && previous.services[id] && previous.services[id].state) || 'operational';
   }
+  // Carreh Business runs on its own servers: its public status answer, else "its API answers at all".
+  s.business_site = bizSite.ok ? 'operational' : 'outage';
+  const bizUp = (bizApi.ok && bizApi.json && bizApi.json.ok === true)
+    || (bizApi.status != null && bizApi.status > 0 && bizApi.status < 500);
+  s.business = bizUp ? (bizApi.json && bizApi.json.database && bizApi.json.database !== 'up' ? 'degraded' : 'operational') : 'outage';
   // Every service needs Carreh's servers; when they are down, nothing behind them works either.
   if (!serverUp) for (const id of ['flight_tracking', 'notifications', 'advisor', 'support', 'esim_store']) s[id] = worst(s[id], 'outage');
   return s;

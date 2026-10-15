@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Carreh Status</title>
-<meta name="description" content="Live status of Carreh, Flight Board and carreh.com: the apps, live flight tracking, notifications, Carreh Advisor, support and the eSIM store.">
+<meta name="description" content="Live status of Carreh, Flight Board, Carreh Business and carreh.com: the apps, live flight tracking, notifications, Carreh Advisor, support and the eSIM store.">
 <meta name="theme-color" content="#0B2318">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 100'%3E%3Cpath d='M64,26 A32,32 0 1 0 64,74' fill='none' stroke='%230E4A28' stroke-width='10' stroke-linecap='round'/%3E%3Cpath d='M46,26 A32,32 0 1 1 46,74' fill='none' stroke='%2340be78' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -186,12 +186,13 @@
       <nav aria-label="Carreh">
         <a href="https://carreh.com/">carreh.com</a>
         <a href="https://flightboard.carreh.com/">Flight Board</a>
+        <a href="https://business.carreh.com/">Carreh Business</a>
       </nav>
     </div>
 
     <div class="headline">
       <h1 id="headline">Checking <em>Carreh.</em></h1>
-      <p class="lead" id="lead">Carreh, Flight Board and carreh.com, checked from outside our own servers.</p>
+      <p class="lead" id="lead">Carreh, Flight Board, Carreh Business and carreh.com, checked from outside our own servers.</p>
     </div>
 
     <div class="board" role="table" aria-label="Carreh services">
@@ -244,6 +245,7 @@
     <nav aria-label="More">
       <a href="https://carreh.com/">carreh.com</a>
       <a href="https://flightboard.carreh.com/">Flight Board</a>
+      <a href="https://business.carreh.com/">Carreh Business</a>
       <a href="https://carreh.com/privacy-policy">Privacy</a>
       <a href="mailto:support@carreh.com">Contact support</a>
     </nav>
@@ -257,9 +259,11 @@ const SERVICES = [
   { group: 'Apps', items: [
     { id: 'carreh_app', board: 'Carreh', name: 'Carreh', desc: 'The Carreh app on iPhone and Android' },
     { id: 'flight_board', board: 'Flight Board', name: 'Flight Board', desc: 'The Flight Board app and flightboard.carreh.com' },
+    { id: 'business', board: 'Business', name: 'Carreh Business', desc: 'Business travel and expenses for companies: trips, approvals, expenses and finance' },
   ] },
   { group: 'Web', items: [
     { id: 'website', board: 'carreh.com', name: 'carreh.com', desc: 'The Carreh website and your account on the web' },
+    { id: 'business_site', board: 'business.carreh.com', name: 'business.carreh.com', desc: 'The Carreh Business website, sign-in and company workspace' },
   ] },
   { group: 'Services', items: [
     { id: 'flight_tracking', board: 'Live flights', name: 'Live flight tracking', desc: 'Gates, delays, boarding and landings for the flights you follow' },
@@ -330,7 +334,7 @@ function render({ status, history }) {
   $('lead').textContent = late && worst === 'operational'
     ? 'Our last check was ' + ago + ', and everything was working normally then. Checks usually run every 5 minutes; this page updates as soon as the next one is in.'
     : worst === 'operational'
-    ? 'Carreh, Flight Board and carreh.com are all working normally. We check them every 5 minutes from outside our own servers.'
+    ? 'Carreh, Flight Board, Carreh Business and carreh.com are all working normally. We check them every 5 minutes from outside our own servers.'
     : 'Affected ' + (late ? 'at our last check, ' + ago : 'right now') + ': ' + hit.join(', ') + '. Everything else is working normally. We are on it, and this page updates every 5 minutes.';
   $('checked').textContent = 'Last check: ' + ago;
 
