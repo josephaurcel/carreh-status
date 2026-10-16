@@ -15,11 +15,12 @@ const DATA = process.argv[2] || 'data';
 const SUPABASE = 'https://kujufeuceyrhgfwyonsl.supabase.co';
 // The public (anon) key: it ships in every Carreh app and web page, and can only call public functions.
 const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1anVmZXVjZXlyaGdmd3lvbnNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MzMxOTIsImV4cCI6MjA4ODQwOTE5Mn0.ipkHVasACY2rErJxSaXFxdEdkdTMhqzdT2bK3bhlsl4';
-const SERVICES = ['carreh_app', 'flight_board', 'business', 'website', 'business_site', 'flight_tracking', 'notifications', 'advisor', 'support', 'esim_store'];
+const SERVICES = ['carreh_app', 'flight_board', 'business', 'website', 'flightboard_site', 'business_site', 'flight_tracking', 'notifications', 'advisor', 'support', 'esim_store', 'carreh_services', 'sign_in', 'email'];
 const NAMES = {
   carreh_app: 'The Carreh app', flight_board: 'Flight Board', website: 'carreh.com', flight_tracking: 'Live flight tracking',
   notifications: 'Notifications', advisor: 'Carreh Advisor', support: 'Support', esim_store: 'The eSIM store',
   business: 'Carreh Business', business_site: 'business.carreh.com',
+  flightboard_site: 'flightboard.carreh.com', carreh_services: 'Carreh Services', sign_in: 'Sign-in and account recovery', email: 'Emails from Carreh',
 };
 
 const worst = (...s) => s.filter(Boolean).reduce((a, b) => (RANK[b] > RANK[a] ? b : a), 'operational');
@@ -49,7 +50,7 @@ async function get(url, { expect, json = false, method = 'GET', headers = {}, bo
 }
 
 async function check(previous) {
-  const [site, fbSite, health, summary, bizSite, bizApi] = await Promise.all([
+  const [site, fbSite, health, summary, bizSite, bizApi, servicesPage, recovery, security, mail] = await Promise.all([
     get('https://carreh.com/', { expect: 'Carreh' }),
     get('https://flightboard.carreh.com/', { expect: 'Flight Board' }),
     get('https://carreh.com/.netlify/functions/health', { json: true }),
@@ -58,12 +59,23 @@ async function check(previous) {
     // ★ 16 OCT 2026 (founder) — Carreh Business is its own system (Cloudflare), checked on its own.
     get('https://business.carreh.com/', { expect: 'Carreh' }),
     get('https://business.carreh.com/api/v1/status', { json: true }),
+    // ★ 16 OCT 2026 (founder: "we have more services than this"). Each with its own live check.
+    get('https://carreh.com/services', { expect: 'Carreh' }),
+    get('https://recovery.carreh.com/health', { json: true }),
+    get('https://security.carreh.com/health', { json: true }),
+    get('https://mail.carreh.com/health', { json: true }),
   ]);
   const serverUp = health.ok && health.json && health.json.ok === true && health.json.database === 'up';
   const s = {};
   s.website = site.ok ? 'operational' : 'outage';
   s.carreh_app = serverUp ? 'operational' : 'outage';
-  s.flight_board = serverUp ? (fbSite.ok ? 'operational' : 'degraded') : 'outage';
+  // flightboard.carreh.com is its own line now; the app depends on Carreh's servers.
+  s.flight_board = serverUp ? 'operational' : 'outage';
+  s.flightboard_site = fbSite.ok ? 'operational' : 'outage';
+  s.carreh_services = servicesPage.ok ? (serverUp ? 'operational' : 'degraded') : 'outage';
+  const okJson = (r) => r.ok && r.json && r.json.ok === true;
+  s.sign_in = okJson(recovery) && okJson(security) ? 'operational' : (okJson(recovery) || okJson(security) ? 'degraded' : 'outage');
+  s.email = okJson(mail) ? 'operational' : 'outage';
   const inner = (summary.ok && summary.json && summary.json.services) || null;
   for (const id of ['flight_tracking', 'notifications', 'advisor', 'support', 'esim_store']) {
     if (inner && inner[id] && RANK[inner[id].state] != null) s[id] = inner[id].state;

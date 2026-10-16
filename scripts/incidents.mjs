@@ -9,6 +9,13 @@ export const TITLES = {
   advisor: ['Carreh Advisor may answer slowly', 'Carreh Advisor is not answering'],
   support: ['Support messages may take longer to arrive', 'Support messages are not coming through'],
   esim_store: ['The eSIM store may be slow', 'The eSIM store is not working'],
+  // ★ 16 OCT 2026 (founder): Carreh Business and the services the page did not show.
+  business: ['Carreh Business may be slow', 'Carreh Business is not reachable'],
+  business_site: ['business.carreh.com may be slow', 'business.carreh.com is not reachable'],
+  flightboard_site: ['flightboard.carreh.com may be slow', 'flightboard.carreh.com is not reachable'],
+  carreh_services: ['Carreh Services may be slow', 'Carreh Services is not reachable'],
+  sign_in: ['Signing in may be slow', 'Signing in and account recovery are not working'],
+  email: ['Emails from Carreh may arrive late', 'Emails from Carreh are not being sent'],
 };
 
 /** One opens after two bad checks in a row (10 minutes); it closes on the first good check.

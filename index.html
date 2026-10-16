@@ -258,11 +258,12 @@
 const SERVICES = [
   { group: 'Apps', items: [
     { id: 'carreh_app', board: 'Carreh', name: 'Carreh', desc: 'The Carreh app on iPhone and Android' },
-    { id: 'flight_board', board: 'Flight Board', name: 'Flight Board', desc: 'The Flight Board app and flightboard.carreh.com' },
+    { id: 'flight_board', board: 'Flight Board', name: 'Flight Board', desc: 'The Flight Board app on iPhone and Android' },
     { id: 'business', board: 'Business', name: 'Carreh Business', desc: 'Business travel and expenses for companies: trips, approvals, expenses and finance' },
   ] },
   { group: 'Web', items: [
     { id: 'website', board: 'carreh.com', name: 'carreh.com', desc: 'The Carreh website and your account on the web' },
+    { id: 'flightboard_site', board: 'flightboard.carreh.com', name: 'flightboard.carreh.com', desc: 'The Flight Board website' },
     { id: 'business_site', board: 'business.carreh.com', name: 'business.carreh.com', desc: 'The Carreh Business website, sign-in and company workspace' },
   ] },
   { group: 'Services', items: [
@@ -271,6 +272,9 @@ const SERVICES = [
     { id: 'advisor', board: 'Advisor', name: 'Carreh Advisor', desc: 'Answers from Carreh’s travel assistant' },
     { id: 'support', board: 'Support', name: 'Support', desc: 'Messages to Carreh Client Services' },
     { id: 'esim_store', board: 'eSIM store', name: 'eSIM store', desc: 'Browsing, buying and activating travel eSIMs' },
+    { id: 'carreh_services', board: 'Carreh Services', name: 'Carreh Services', desc: 'Visa applications and travel services, and your case pages' },
+    { id: 'sign_in', board: 'Sign-in', name: 'Sign-in and account recovery', desc: 'Signing in, sign-in codes, passkeys and getting back into your account' },
+    { id: 'email', board: 'Emails', name: 'Emails from Carreh', desc: 'Confirmations, receipts, sign-in codes and support replies by email' },
   ] },
 ];
 const ALL = SERVICES.flatMap((g) => g.items);
