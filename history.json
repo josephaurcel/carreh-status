@@ -1,0 +1,623 @@
+{
+ "days": {
+  "carreh_app": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "flight_board": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "website": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "flight_tracking": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "notifications": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "advisor": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "support": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "esim_store": {
+   "2026-10-05": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-06": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-07": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-08": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-09": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-10": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-11": {
+    "ok": 5,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-12": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-13": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-14": {
+    "ok": 6,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-15": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "business": {
+   "2026-10-15": {
+    "ok": 1,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "business_site": {
+   "2026-10-15": {
+    "ok": 1,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "flightboard_site": {
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "carreh_services": {
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "sign_in": {
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  },
+  "email": {
+   "2026-10-16": {
+    "ok": 7,
+    "degraded": 0,
+    "outage": 0
+   },
+   "2026-10-17": {
+    "ok": 4,
+    "degraded": 0,
+    "outage": 0
+   }
+  }
+ },
+ "incidents": []
+}
